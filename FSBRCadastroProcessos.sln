@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34616.47
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSBRCadastroProcessos.WebApp", "FSBRCadastroProcessos.WebApp\FSBRCadastroProcessos.WebApp.csproj", "{0C0D43E4-8F5F-4801-825F-CB51B55EFB88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSBRCadastroProcessos.API", "FSBRCadastroProcessos.API\FSBRCadastroProcessos.API.csproj", "{46831ED6-D3A8-4B60-9BA9-467A977A61F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FSBRCadastroProcessos.Test", "FSBRCadastroProcessos.Test\FSBRCadastroProcessos.Test.csproj", "{4555941B-A612-474D-BBAF-5C1585CF46D6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0C0D43E4-8F5F-4801-825F-CB51B55EFB88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C0D43E4-8F5F-4801-825F-CB51B55EFB88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C0D43E4-8F5F-4801-825F-CB51B55EFB88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C0D43E4-8F5F-4801-825F-CB51B55EFB88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46831ED6-D3A8-4B60-9BA9-467A977A61F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46831ED6-D3A8-4B60-9BA9-467A977A61F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46831ED6-D3A8-4B60-9BA9-467A977A61F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46831ED6-D3A8-4B60-9BA9-467A977A61F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4555941B-A612-474D-BBAF-5C1585CF46D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4555941B-A612-474D-BBAF-5C1585CF46D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4555941B-A612-474D-BBAF-5C1585CF46D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4555941B-A612-474D-BBAF-5C1585CF46D6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7A0CA0B-6B95-4B2A-AFE7-F851BBC2960F}
+	EndGlobalSection
+EndGlobal

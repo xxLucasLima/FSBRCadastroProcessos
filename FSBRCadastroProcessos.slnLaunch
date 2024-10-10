@@ -1,0 +1,16 @@
+[
+  {
+    "Name": "All Projects",
+    "Projects": [
+      {
+        "Name": "FSBRCadastroProcessos.WebApp\\FSBRCadastroProcessos.WebApp.csproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "FSBRCadastroProcessos.API\\FSBRCadastroProcessos.API.csproj",
+        "Action": "Start",
+        "DebugTarget": ""
+      }
+    ]
+  }
+]

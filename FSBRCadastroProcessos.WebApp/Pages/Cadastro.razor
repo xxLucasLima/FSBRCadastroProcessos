@@ -1,0 +1,103 @@
+﻿@page "/cadastros"
+@page "/"
+
+@using FSBRCadastroProcessos.WebApp.Services
+@using MudBlazor
+
+@inject HttpClient Http
+@inject ICadastroService CadastroService
+@inject NavigationManager NavigationManager
+@inject IDialogService DialogService
+
+<h3>Lista Cadastros</h3>
+
+<div class="form-group mb-4">
+    <MudButton @onclick="() => CreateCadastro (new Models.Cadastro(), false)" Color="Color.Primary">Adicione novo Cadastro</MudButton>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>NPU</th>
+            <th>Data de Cadastro</th>
+            <th>UF</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Cadastros == null)
+        {
+            <tr>
+                <td colspan="4">Loading...</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (var cadastro in Cadastros)
+            {
+                <tr>
+                    <td>@cadastro.NPU</td>
+                    <td>@cadastro.DataCadastro</td>
+                    <td>@cadastro.UF</td>
+                    <td>
+                        <MudButton @onclick="(() => ShowEditModal(cadastro, true))">Details</MudButton>
+                        <MudButton @onclick="(() => Delete(cadastro.Id))">Delete</MudButton>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<Models.Cadastro> Cadastros;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cadastros = await CadastroService.GetAll();
+    }
+
+    private async Task ShowEditModal(Models.Cadastro cadastro, bool IsEdit)
+    {
+        var parameters = new DialogParameters { ["Cadastro"] = cadastro, ["isEdit"] = IsEdit };
+
+        DialogOptions options = new DialogOptions { CloseButton = true };
+
+        var dialog =await DialogService.ShowAsync<CadastroDialog>("Edit Cadastro", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadCadastros();
+        }
+    }
+
+    private async Task CreateCadastro(Models.Cadastro cadastro, bool IsEdit)
+    {
+        var parameters = new DialogParameters { ["Cadastro"] = cadastro, ["isEdit"] = IsEdit };
+
+        DialogOptions options = new DialogOptions { CloseButton = true };
+
+        var dialog = await DialogService.ShowAsync<CadastroDialog>("Create Cadastro", parameters, options);
+
+        var result = await dialog.Result;
+
+        if (!result.Canceled)
+        {
+            await LoadCadastros();
+        }
+    }
+
+    private async Task Delete(int id)
+    {
+        await CadastroService.Delete(id);
+        await LoadCadastros();
+    }
+
+    private async Task LoadCadastros()
+    {
+        Cadastros = await CadastroService.GetAll();
+        StateHasChanged();
+    }
+}

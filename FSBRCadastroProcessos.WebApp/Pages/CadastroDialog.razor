@@ -1,0 +1,117 @@
+﻿@using FSBRCadastroProcessos.WebApp.Services
+@using FSBRCadastroProcessos.WebApp.Models
+@using MudBlazor
+@using MudBlazor.Components
+
+@inject ICadastroService CadastroService
+@inject IIBGEService IBGEService
+
+<MudDialog>
+    <DialogContent>
+        <MudForm @ref="form" @bind-IsValid="@success" @bind-Errors="@errors">
+            <MudTextField @bind-Value="Cadastro.NomeProcesso" Label="NomeProcesso" FullWidth="true" Variant="Variant.Outlined" Required="true" RequiredError="NomeProcesso is required!" />
+            <MudTextField @bind-Value="Cadastro.NPU" Label="NPU" FullWidth="true" Variant="Variant.Outlined" Required="true" RequiredError="NPU Leads is required!" Mask="@(new PatternMask("0000000-00.0000.0.00.0000"))" Validation="@(new Func<string?, string?>(npu => npu != null && npu.Length == 25 ? null : "NPU deve estar completamente preenchido!"))" />
+            <MudDatePicker @bind-Date="Cadastro.DataCadastro" Label="Data de Cadastro" Variant="Variant.Outlined" ShowToolbar="false" Required="true" RequiredError="DataCadastro is required!" />
+            <MudSelect T="string" Label="Selecione a UF" Value="Cadastro.UF" FullWidth="true" Variant="Variant.Outlined" Required="true" RequiredError="UF is required!" ValueChanged="OnUfSelectedAsync">
+                @foreach (var uf in Ufs)
+                {
+                    <MudSelectItem Value="@uf.Sigla">@uf.Nome (@uf.Sigla)</MudSelectItem>
+                }
+            </MudSelect>
+
+            @if (!string.IsNullOrEmpty(Cadastro.UF))
+            {
+                <MudSelect T="string" Label="Selecione o Município" @bind-Value="Cadastro.Municipio" FullWidth="true" Variant="Variant.Outlined" Required="true" RequiredError="Municipio is required!">
+                    @foreach (var municipio in Municipios)
+                    {
+                        <MudSelectItem Value="@municipio.Nome">@municipio.Nome</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            else
+            {
+                <MudSelect T="string" Label="Selecione o Município" @bind-Value="Cadastro.Municipio" FullWidth="true" Variant="Variant.Outlined" Required="true" RequiredError="Municipio is required!" Disabled="true"></MudSelect>
+            }
+        </MudForm>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Color="Color.Secondary">Cancel</MudButton>
+        <MudButton ButtonType="ButtonType.Submit" OnClick="ValidateAndSave" Validate Color="Color.Primary">@((isEdit ? "Update" : "Create"))</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    [Parameter] public Models.Cadastro Cadastro { get; set; }
+    [Parameter] public bool isEdit { get; set; }
+    MudForm form;
+
+    bool success;
+    string[] errors = { };
+
+    private IEnumerable<UF> Ufs = new List<UF>();
+    private IEnumerable<Municipio> Municipios = new List<Municipio>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var ufList = await IBGEService.GetUfsAsync();
+        Ufs = ufList.Select(uf => new UF
+            {
+                Id = uf.Id,
+                Nome = uf.Nome,
+                Sigla = uf.Sigla
+            });
+    }
+
+    private async Task Save()
+    {
+        if (isEdit)
+        {
+            await CadastroService.Update(Cadastro);
+            await CadastroService.GetAll();
+            MudDialog.Close(DialogResult.Ok(Cadastro));
+        }
+        else
+        {
+            await CadastroService.Create(Cadastro);
+            await CadastroService.GetAll();
+            MudDialog.Close(DialogResult.Ok(Cadastro));   
+        }
+
+    }
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private async Task ValidateAndSave()
+    {
+        await form.Validate();
+
+        if (success)
+        {
+            await Save();
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnUfSelectedAsync(string uf)
+    {
+        Cadastro.UF = uf;
+
+        if (!string.IsNullOrEmpty(uf))
+        {
+            var municipioList = await IBGEService.GetMunicipioByUfAsync(uf);
+            Municipios = municipioList.Select(m => new Municipio
+                {
+                    Id = m.Id,
+                    Nome = m.Nome
+                });
+        }
+        else
+        {
+            Municipios = Enumerable.Empty<Municipio>();
+        }
+    }
+}
