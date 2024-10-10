@@ -25,8 +25,8 @@ Este projeto foi desenvolvido seguindo os princípios de Domain-Driven Design (D
 ### Como Configurar e Rodar o Projeto
 1. **Clone o Repositório:**
    ```bash
-   git clone https://github.com/xxlucaslima/fsbr_cadastroprocessos.git
-   cd fsbr_cadastroprocessos
+   git clone https://github.com/xxlucaslima/FSBRCadastroProcessos.git
+   cd FSBRCadastroProcessos
    ```
 
 2. **Configure a String de Conexão**
