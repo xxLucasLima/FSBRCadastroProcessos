@@ -12,45 +12,32 @@
 <h3>Lista Cadastros</h3>
 
 <div class="form-group mb-4">
-    <MudButton @onclick="() => CreateCadastro (new Models.Cadastro(), false)" Color="Color.Primary">Adicione novo Cadastro</MudButton>
+    <MudButton @onclick="() => CreateCadastro(new Models.Cadastro(), false)" Color="Color.Primary">Adicione novo Cadastro</MudButton>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>NPU</th>
-            <th>Data de Cadastro</th>
-            <th>UF</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Cadastros == null)
-        {
-            <tr>
-                <td colspan="4">Loading...</td>
-            </tr>
-        }
-        else
-        {
-            @foreach (var cadastro in Cadastros)
-            {
-                <tr>
-                    <td>@cadastro.NPU</td>
-                    <td>@cadastro.DataCadastro</td>
-                    <td>@cadastro.UF</td>
-                    <td>
-                        <MudButton @onclick="(() => ShowEditModal(cadastro, true))">Details</MudButton>
-                        <MudButton @onclick="(() => Delete(cadastro.Id))">Delete</MudButton>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+<MudTable Items="Cadastros" Bordered="true" Striped="true" Hover="true" PageSize="10">
+    <HeaderContent>
+        <MudTh>NPU</MudTh>
+        <MudTh>Data de Cadastro</MudTh>
+        <MudTh>UF</MudTh>
+        <MudTh>Ações</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="NPU">@context.NPU</MudTd>
+        <MudTd DataLabel="Data de Cadastro">@context.DataCadastro</MudTd>
+        <MudTd DataLabel="UF">@context.UF</MudTd>
+        <MudTd DataLabel="Ações">
+            <MudButton @onclick="(() => ShowEditModal(context, true))" Color="Color.Primary" Size="Size.Small">Detalhes</MudButton>
+            <MudButton @onclick="(() => Delete(context.Id))" Color="Color.Error" Size="Size.Small">Deletar</MudButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>
 
 @code {
-    private IEnumerable<Models.Cadastro> Cadastros;
+    private IEnumerable<Models.Cadastro> Cadastros = new List<Models.Cadastro>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,7 +50,7 @@
 
         DialogOptions options = new DialogOptions { CloseButton = true };
 
-        var dialog =await DialogService.ShowAsync<CadastroDialog>("Edit Cadastro", parameters, options);
+        var dialog = await DialogService.ShowAsync<CadastroDialog>("Edit Cadastro", parameters, options);
 
         var result = await dialog.Result;
 
