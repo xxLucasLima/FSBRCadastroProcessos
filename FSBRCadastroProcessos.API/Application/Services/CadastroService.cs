@@ -12,6 +12,12 @@ namespace FSBRCadastroProcessos.API.Application.Services
         {
             _cadastroRepository = cadastroRepository;
         }
+
+        public Task<Cadastro> ConfirmacaoVisualizacao(Cadastro entity)
+        {
+            return _cadastroRepository.ConfirmacaoVisualizacao(entity);
+        }
+
         public Task<Cadastro> Create(Cadastro entity)
         {
             return _cadastroRepository.Create(entity);

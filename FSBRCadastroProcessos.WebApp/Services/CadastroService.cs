@@ -106,4 +106,16 @@ public class CadastroService : ICadastroService
             return false;
         }
     }
+
+    public async Task ConfirmacaoVisualizacao(Cadastro cadastro)
+    {
+        try
+        {
+           await _httpClient.PutAsJsonAsync($"api/cadastro/confirmacaovisualizacao/{cadastro.Id}", cadastro);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erro ao salvar confirmação de visualização: {ex.Message}");
+        }
+    }
 }

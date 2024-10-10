@@ -9,6 +9,7 @@ namespace FSBRCadastroProcessos.WebApp.Services
         Task<Cadastro> Update(Cadastro entity);
         Task<bool> Delete(int id);
         Task<IEnumerable<Cadastro>> GetAll();
+        Task ConfirmacaoVisualizacao(Cadastro entity);
         Task<Cadastro> GetById(int id);
     }
 }

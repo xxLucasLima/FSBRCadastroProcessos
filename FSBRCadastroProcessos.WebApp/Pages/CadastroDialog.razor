@@ -54,6 +54,9 @@
 
     protected override async Task OnInitializedAsync()
     {
+        if(Cadastro.Id != 0)
+            await CadastroService.ConfirmacaoVisualizacao(Cadastro);
+
         var ufList = await IBGEService.GetUfsAsync();
         Ufs = ufList.Select(uf => new UF
             {

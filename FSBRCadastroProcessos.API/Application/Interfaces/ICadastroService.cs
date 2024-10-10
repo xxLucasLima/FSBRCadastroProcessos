@@ -9,6 +9,8 @@ namespace FSBRCadastroProcessos.API.Application.Interfaces
         Task<bool> Delete(int id);
         Task<List<Cadastro>> GetAll();
         Task<Cadastro> GetById(int id);
+        Task<Cadastro> ConfirmacaoVisualizacao(Cadastro entity);
+
 
     }
 }

@@ -8,5 +8,7 @@
         public DateTime DataCadastro { get; set; }
         public string? UF { get; set; }
         public string? Municipio { get; set; }
+        public DateTime? ConfirmacaoVisualizacao { get; set; }
+
     }
 }

@@ -68,5 +68,18 @@ namespace FSBRCadastroProcessos.API.Controllers
             return NoContent();
         }
 
+        [HttpPut("confirmacaovisualizacao/{id}")]
+        public async Task<ActionResult<Cadastro>> ConfirmacaoVisualizacao(int id, [FromBody] Cadastro cadastro)
+        {
+            if (cadastro == null || cadastro.Id != id)
+                return BadRequest("Dados de cadastro inválidos.");
+
+            var updatedCadastro = await _cadastroService.ConfirmacaoVisualizacao(cadastro);
+            if (updatedCadastro == null)
+                return NotFound("Cadastro não encontrado.");
+
+            return Ok(updatedCadastro);
+        }
+
     }
 }

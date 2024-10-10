@@ -13,6 +13,31 @@ namespace FSBRCadastroProcessos.API.Infrastructure
         {
             _context = context;
         }
+
+        public async Task<Cadastro> ConfirmacaoVisualizacao(Cadastro entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+
+            try
+            {
+                var existingEntity = await _context.Cadastros.FindAsync(entity.Id);
+                if (existingEntity == null)
+                    return null;
+
+                existingEntity.ConfirmacaoVisualizacao = DateTime.Now;
+
+                    await _context.SaveChangesAsync();
+                return existingEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao atualizar o cadastro: {ex.Message}");
+            }
+
+            return null;
+        }
+
         public async Task<Cadastro?> Create(Cadastro entity)
         {
             if (entity == null)
