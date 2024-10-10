@@ -73,3 +73,13 @@ Este projeto foi desenvolvido seguindo os princípios de Domain-Driven Design (D
    ```bash
    dotnet test
    ```
+
+5. **Possivel Erro de Building (migration)**
+
+Foi identificado que, ao tentar gerar os arquivos de migration por meio do Package Manager Console dentro do Visual Studio, foi gerado o erro abaixo em algumas ocasiões:
+
+```The specified deps.json [C:\Users\Lucas\Desktop\FSBRCadastroProcessos-master\FSBRCadastroProcessos.WebApp\bin\Debug\net8.0\FSBRCadastroProcessos.WebApp.deps.json] does not exist```
+
+Uma alternativa pra evitar que isso aconteça é, antes de gerar o migration, mudar o StartupProject de FSBRCadastroProcessos.WebApp para FSBRCadastroProcessos.API. Os arquivos de migration devem ser criados normalmente.
+
+
